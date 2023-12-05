@@ -9,7 +9,7 @@ function loadMilestones() {
       return `<div class="milestone border-b">
       <div class="flex">
         <div class="checkbox"><input type="checkbox" /></div>
-        <div onclick="openMilestone(this)">
+        <div onclick="openMilestone(this, ${milestone._id})">
           <p>
             ${milestone.name}
             <span><i class="fas fa-chevron-down"></i></span>
@@ -28,10 +28,11 @@ function loadMilestones() {
     </div>`;
     })
     .join("")}`;
-}
+
+};
 
 
-function openMilestone(milestoneElement){
+function openMilestone(milestoneElement, id){
   const currentPanel = milestoneElement.parentNode.nextElementSibling;
   const showPanel = document.querySelector(".show");
   const activePanel = document.querySelector(".active");
@@ -46,6 +47,25 @@ function openMilestone(milestoneElement){
   }
 
   currentPanel.classList.toggle("show");
-}
+
+
+  loadImage(id);
+};
+
+function loadImage(id){
+  const milestoneImage = document.querySelector(".milestoneImage");
+  const title = document.querySelector(".title");
+  const details = document.querySelector(".details");
+
+  milestoneImage.style.opacity = "0";
+  milestoneImage.src = milestonesData[id].image;
+  details.innerText = milestonesData[id].description;
+  title.innerText = milestonesData[id].name;
+};
+
+const milestoneImage = document.querySelector(".milestoneImage");
+milestoneImage.onload = function(){
+  this.style.opacity = "1";
+};
 
 loadMilestones();
